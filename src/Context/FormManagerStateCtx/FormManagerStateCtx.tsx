@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { OpenComponentFn } from '../../Types/types';
 
 export const FormStateManagerCtx = React.createContext({
   state: {},
-  updateState: data => {},
-  register: reducer => null,
-  deRegister: reducer => null
+  updateFormState: (data: any) => {},
+  register: (reducer: any) => null,
+  deRegister: (reducer: any) => null
 });
 
 export const FormStateModelManagerProvider: React.FC<
@@ -15,15 +16,17 @@ export const FormStateModelManagerProvider: React.FC<
 
   useEffect(() => {
     // Register to the new events?
-    reducer.current?.register();
-  }, [reducer.current]);
+    // reducer?.register();
+  }, [reducer]);
 
-  const register = newReducer => {
-    reducer.current = newReducer;
+  const register = (newReducer: any) => {
+    // reducer.current = newReducer;
+    return null;
   };
 
   const deRegister = () => {
-    reducer.current = null;
+    // reducer = null;
+    return null;
   };
 
   return (
@@ -31,7 +34,7 @@ export const FormStateModelManagerProvider: React.FC<
       value={{
         state,
         updateFormState: (arg: any) => {
-          setState(lState => ({ ...lState, ...arg }));
+          setState((lState: any) => ({ ...lState, ...arg }));
         },
         register,
         deRegister
@@ -53,7 +56,7 @@ export const useFormStateManger = (name: string) => {
 
   const updateFormStateInternal = (localState: any) => {
     console.log(localState);
-    updateFormState({ [name]: { ...state[name], ...localState } });
+    updateFormState({ [name]: { ...(state as any)[name], ...localState } });
   };
 
   return {

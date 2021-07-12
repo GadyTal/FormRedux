@@ -1,5 +1,7 @@
 export interface PagerPresenationComponentProps {
+  openFn: OpenComponentFn; 
   changePage: (id: string) => void;
+  onSubmit: (state: any) => void;
 }
 
 export interface CurrentOpen {

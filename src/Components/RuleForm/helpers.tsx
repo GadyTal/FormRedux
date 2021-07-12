@@ -1,7 +1,9 @@
-import { RuleFormPresentation } from '../RuleFormPresentation';
-import RuleAdvanceSettingsFormPresentation from '../RuleAdvanceSettingsFormPresentation';
-import { usePager } from '../../hooks/usePager/usePager';
 import React from 'react';
+import { usePager } from '../../hooks/usePager/usePager';
+import { PagerPresenationComponentProps } from '../../Types/types';
+import RuleAdvanceSettingsFormPresentation from '../RuleAdvanceSettingsFormPresentation';
+import { RuleFormPresentation } from '../RuleFormPresentation';
+import { RuleFormContainer } from './RuleFormContainer';
 
 export const ruleFormSchema = {};
 
@@ -14,9 +16,10 @@ export const RuleFormStateMachine = {
   }
 };
 
-export const RuleFormPager: React.FC<{ open: OpenComponentFn; dispatch }> = ({
-  open,
-  dispatch
+export const RuleFormPager: React.FC<PagerPresenationComponentProps> = ({
+  openFn,
+  onSubmit,
+  // changePage
 }) => {
   const { changePage, currentPage: CurrentPage } = usePager(
     RuleFormStateMachine
@@ -24,7 +27,7 @@ export const RuleFormPager: React.FC<{ open: OpenComponentFn; dispatch }> = ({
   console.log('CurrentPage', CurrentPage);
 
   return (
-    <RuleFormContainer changePage={changePage} open={open} dispatch={dispatch}>
+    <RuleFormContainer changePage={changePage} open={open}>
       <CurrentPage />
     </RuleFormContainer>
   );

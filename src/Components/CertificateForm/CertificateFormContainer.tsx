@@ -1,18 +1,19 @@
 import React from "react";
-import { CertificateFormPresentation } from "../CertificateFormPresentation";
+import { CertificateFormPresentation } from "./CertificateFormPresentation";
 
-const CertificateFormContainer = ({ dispatch }) => {
-  const onSubmit = data => {
+export const CertificateFormContainer = (props: any) => {
+  const { dispatch, changePage, openFn } = props;
+  const onSubmit = (data: any) => {
     // pub(data);
     dispatch('table.optimitiic.cert', data); // clientCertTable
-    api(data).then(res => {
-      dispatch<CertificateModel>('formStateManager.save.cert', {
-        ...payload,
-        type: 'Cert'
-      }); // formStateManager
-      dispatch<CertificateModel>('table.save', { ...payload }); // table
-    });
+    // api(data).then(res => {
+    //   dispatch<CertificateModel>('formStateManager.save.cert', {
+    //     ...payload,
+    //     type: 'Cert'
+    //   }); // formStateManager
+    //   dispatch<CertificateModel>('table.save', { ...payload }); // table
+    // });
   };
 
-  return <CertificateFormPresentation changePage={changePage} open={open} />;
+  return <CertificateFormPresentation changePage={changePage} openFn={openFn} onSubmit={onSubmit} />;
 };
