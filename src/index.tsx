@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { RuleTable } from './Components/RuleTable/RuleTable';
+import RuleTable from './Components/RuleTable/RuleTable';
 import { FormStateModelManagerProvider } from './Context/FormManagerStateCtx/FormManagerStateCtx';
 import LayoutOpenerProvider from './Context/LayoutOpenerCtx/LayoutOpenerCtx';
 import { store } from './Store/store';

@@ -4,7 +4,7 @@ import { OpenComponentFn } from '../../Types/types';
 import { FormContainer } from '../FormContainer';
 import RuleAdvanceSettingsFormPresentation from '../RuleAdvanceSettingsFormPresentation';
 import { RuleFormPresentation } from '../RuleFormPresentation';
-import { RuleFormContainer } from './RuleFormContainer';
+import RuleFormContainer from './RuleFormContainer';
 
 export const ruleFormSchema = {};
 
@@ -28,7 +28,10 @@ export const RuleFormPager: React.FC<{openFn: OpenComponentFn}> = ({
 
   return (
     <RuleFormContainer renderProp={(onSubmit) => {
-      return <FormContainer schema={currentPage.schema} onSubmit={onSubmit} formName={"Rule Form Container"} renderProps={(validation, formState, errors, setFormState) => {
+      return <FormContainer schema={currentPage.schema} onSubmit={(data) => {
+        onSubmit(data);
+        // openFn()
+      }} formName={"Rule Form Container"} renderProps={(validation, formState, errors, setFormState) => {
         return (
           <currentPage.Component changePage={changePage} openFn={openFn} errors={errors} state={formState} setFormState={setFormState} />
         )

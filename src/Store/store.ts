@@ -1,7 +1,5 @@
 import { Action, configureStore, createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
@@ -10,10 +8,15 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 >;
 
 const ruleInitialState: { entities: RuleEntity[] } = {
-  entities: [] // ruleEntities
+  entities: [
+    {id: '1', name: 'rulePredfined1'},
+    {id: '2', name: 'rulePredfined2'},
+    {id: '3', name: 'rulePredfined3'}
+  ],
+
 };
 
-interface RuleEntity {
+export interface RuleEntity {
   id: string;
   name: string;
 }
@@ -44,10 +47,76 @@ export const ruleSlice = createSlice({
   }
 });
 
+export const formSlice = createSlice({
+  name: 'form',
+  initialState: { current: {}, isOpen: false },
+  // The `reducers` field lets us define reducers and generate associated actions
+  reducers: {
+    saveFormEntity: (state, action: PayloadAction<{}>) => {
+      // Redux Toolkit allows us to write "mutating" logic in reducers. It
+      // doesn't actually mutate the state because it uses the Immer library,
+      // which detects changes to a "draft state" and produces a brand new
+      // immutable state based off those changes
+      state.current = {...state.current, ...action.payload };
+    },
+    toggleOpen: (state, action: PayloadAction<boolean>) => {
+      state.isOpen = action.payload;
+    }
+  }
+});
+
+export const { saveFormEntity} = formSlice.actions
+
+interface CertEntity extends RuleEntity {}
+
+const certInitialState: { entities: RuleEntity[] } = {
+  entities: [
+    {id: '1', name: 'certPredfined1'},
+    {id: '2', name: 'certPredfined2'},
+    {id: '3', name: 'certPredfined3'}
+  ]
+};
+
+export const certificateSlice = createSlice({
+  name: 'cert',
+  initialState: certInitialState,
+  // The `reducers` field lets us define reducers and generate associated actions
+  reducers: {
+    saveEntity: (state, action: PayloadAction<CertEntity>) => {
+      // Redux Toolkit allows us to write "mutating" logic in reducers. It
+      // doesn't actually mutate the state because it uses the Immer library,
+      // which detects changes to a "draft state" and produces a brand new
+      // immutable state based off those changes
+      saveFormEntity(action.payload) // form {...ruletableModel, ...certificatemodel}
+      state.entities = [...state.entities, action.payload]; //table
+    },
+    deleteEntity: (state, action: PayloadAction<CertEntity>) => {
+      const entityToDelete = state.entities.filter(entity => entity.id === action.payload.id);
+
+    },
+    // Use the PayloadAction type to declare the contents of `action.payload`
+    updateEntity: (state, action: PayloadAction<CertEntity>) => {
+      const index = state.entities.findIndex((entity) => entity.id == action.payload.id);
+      if (index !== -1) {
+        state.entities[index] = action.payload;
+      }
+    }
+  }
+});
+
+
+
 export const store = configureStore({
   reducer: {
-    rule: ruleSlice.reducer
+    rule: ruleSlice.reducer,
+    certificate: certificateSlice.reducer,
+    form: formSlice.reducer
   },
 });
 
 export const { saveEntity, deleteEntity, updateEntity } = ruleSlice.actions
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch

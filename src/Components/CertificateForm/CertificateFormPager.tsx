@@ -25,7 +25,9 @@ export const CertificatePager: React.FC<{openFn: OpenComponentFn}> = ({
     <CertificateFormContainer renderProp={(onSubmit) => {
       if (!currentPage) return <></>;
       
-      return <FormContainer schema={currentPage.schema} onSubmit={onSubmit} formName={"Rule Form Container"} renderProps={(validation, formState, errors, setFormState) => {
+      return <FormContainer schema={currentPage.schema} onSubmit={(data) => {
+        onSubmit(data);
+      }} formName={"Rule Form Container"} renderProps={(validation, formState, errors, setFormState) => {
         return (
           <currentPage.Component changePage={changePage} openFn={openFn} errors={errors} state={formState} setFormState={setFormState} />
         )

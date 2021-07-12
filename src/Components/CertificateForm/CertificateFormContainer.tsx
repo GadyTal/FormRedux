@@ -1,11 +1,16 @@
 import React from "react";
+import { connect, ConnectedProps } from "react-redux";
 
-export const CertificateFormContainer: React.FC<{ renderProp: (onSubmit: (data: any) => void) => JSX.Element }> = (props) => {
+interface CertificateFormConainerProps extends  PropsFromRedux {
+  renderProp: (onSubmit: (data: any) => void) => JSX.Element;
+}
+
+export const CertificateFormContainer: React.FC<CertificateFormConainerProps> = (props) => {
   const { renderProp } = props;
 
   const onSubmit = (data: any) => {
-    console.log(data);
-
+    // console.log(data);
+    saveEntity(data);
     // dispatch('table.optimitiic.cert', data); // clientCertTable
     // api(data).then(res => {
     //   dispatch<CertificateModel>('formStateManager.save.cert', {
@@ -18,3 +23,14 @@ export const CertificateFormContainer: React.FC<{ renderProp: (onSubmit: (data: 
 
   return renderProp(onSubmit);
 };
+
+const connector = connect(null, {
+  saveEntity,
+  deleteEntity,
+  updateEntity
+});
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(CertificateFormContainer);
+
