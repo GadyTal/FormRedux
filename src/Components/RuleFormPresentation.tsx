@@ -1,5 +1,6 @@
 import React from 'react';
 import { PagerPresenationComponentProps } from '../Types/types';
+import { CertificatePager } from './CertificateForm/CertificateFormPager';
 
 export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({ errors, state, setFormState, openFn, changePage }) => {
   return (
@@ -28,7 +29,7 @@ export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({
         onClick={() => {
           openFn({
             layout: 'modal',
-            component: CertificateFormPager(id, dispatch)
+            component: CertificatePager
           });
         }}
       >

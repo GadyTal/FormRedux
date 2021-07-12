@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePager } from '../../hooks/usePager/usePager';
-import { PagerPresenationComponentProps } from '../../Types/types';
+import { OpenComponentFn } from '../../Types/types';
 import { FormContainer } from '../FormContainer';
 import RuleAdvanceSettingsFormPresentation from '../RuleAdvanceSettingsFormPresentation';
 import { RuleFormPresentation } from '../RuleFormPresentation';
@@ -19,7 +19,7 @@ export const RuleFormStateMachine = {
   }
 };
 
-export const RuleFormPager: React.FC<PagerPresenationComponentProps> = ({
+export const RuleFormPager: React.FC<{openFn: OpenComponentFn}> = ({
   openFn
 }) => {
   const { changePage, currentPage } = usePager(

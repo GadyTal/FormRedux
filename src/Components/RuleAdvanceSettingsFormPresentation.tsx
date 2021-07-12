@@ -1,7 +1,7 @@
 import React from "react";
 import { PagerPresenationComponentProps } from "../Types/types";
 import { FormContainer } from "./FormContainer";
-import { RuleFormPager } from "./RuleForm/helpers";
+import { RuleFormPager } from "./RuleForm/RuleFormPager";
 
 const RuleAdvanceSettingsFormPresentation: React.FC<PagerPresenationComponentProps> = props => {
   const { changePage, openFn, onSubmit } = props;
@@ -24,7 +24,7 @@ const RuleAdvanceSettingsFormPresentation: React.FC<PagerPresenationComponentPro
   };
 
   return (
-    <FormContainer schema={{}} onSubmit={onSubmit} formName={name} renderProps={(validation, formState, errors, setFormState) => (
+    <FormContainer schema={{}} onSubmit={onSubmitHandler} formName={name} renderProps={(validation, formState, errors, setFormState) => (
       <>
         <input
           name={'something'}

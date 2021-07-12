@@ -1,24 +1,21 @@
 import React from 'react';
-import { OpenComponentFn } from '../../Types/types';
+import { CurrentOpen, OpenComponentFn } from '../../Types/types';
 
-export const LayoutOpenerCtx = React.createContext({ open: () => {} });
+export const LayoutOpenerCtx = React.createContext<{ current: CurrentOpen, openFn: OpenComponentFn }>({ current: undefined as unknown as CurrentOpen, openFn: (() => { }) as OpenComponentFn });
 
-const LayoutOpenerProvider: React.FC<React.PropsWithChildren<{}>> = props => {
-  const { children } = props;
-  
-  const [current, setCurrent] = React.useState({
-    layout: undefined,
-    component: undefined
-  } as CurrentOpen);
+const LayoutOpenerProvider: React.FC<{ renderProps: (current: CurrentOpen, openFn: OpenComponentFn) => JSX.Element }> = props => {
+  const { renderProps } = props;
 
-  const open: OpenComponentFn = (current: CurrentOpen) => {
+  const [current, setCurrent] = React.useState<CurrentOpen>();
+
+  const openFn: OpenComponentFn = (current: CurrentOpen) => {
     console.log(current);
     setCurrent(current);
   };
 
   return (
-    <LayoutOpenerCtx.Provider value={{ current, open }}>
-      {children(current, open)}
+    <LayoutOpenerCtx.Provider value={{ current: current as CurrentOpen, openFn }}>
+      {renderProps(current as CurrentOpen, openFn)}
     </LayoutOpenerCtx.Provider>
   );
 };
@@ -27,9 +24,9 @@ export const useLayoutOpener = () => {
   const layoutOpenerCtx = React.useContext(LayoutOpenerCtx);
 
   return {
-    open: (...arg) => {
-      console.log('opened', ...args);
-      layoutOpenerCtx.open(...arg);
+    openFn: (current: CurrentOpen) => {
+      console.log('opened', current);
+      layoutOpenerCtx.openFn && layoutOpenerCtx.openFn(current);
     }
   };
 };

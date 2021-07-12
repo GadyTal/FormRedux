@@ -1,6 +1,6 @@
 import React from 'react';
 import { PagerPresenationComponentProps } from '../../Types/types';
-import { RuleFormPager } from '../RuleForm/helpers';
+import { RuleFormPager } from '../RuleForm/RuleFormPager';
 
 export const CertificateFormPresentation: React.FC<PagerPresenationComponentProps> = ({ changePage, openFn, onSubmit, errors, setFormState, state }) => {
   const name = 'Cert';

@@ -7,7 +7,7 @@ const ruleFormReducer = (type: string, payload: any, state: any) => {
   }
 };
 
-const combineReducers = (a, b) => {
+const combineReducers = (a: any, b: any) => {
   return { dispatch: () => null, state: {} };
 };
 

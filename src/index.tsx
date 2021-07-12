@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { RuleTable } from './Components/RuleTable/RuleTable';
 import { FormStateModelManagerProvider } from './Context/FormManagerStateCtx/FormManagerStateCtx';
-import PloniCtxProvider from './Context/PloniCtx/PloniContext';
+import LayoutOpenerProvider from './Context/LayoutOpenerCtx/LayoutOpenerCtx';
 import { CurrentOpen } from './Types/types';
 
 interface AppProps { }
@@ -25,35 +25,34 @@ class App extends Component<AppProps, AppState> {
 
   render() {
     return (
-      <PloniCtxProvider>
-        {(current: CurrentOpen, openFn: (current: CurrentOpen) => void) => {
-          return (
-            <div>
+      <LayoutOpenerProvider renderProps={(current: CurrentOpen, openFn: (current: CurrentOpen) => void) => {
+        return (
+          <div>
 
-              <Pages />
-              <FormStateModelManagerProvider open={openFn}>
-                {(openFn: any) => {
-                  {
-                    current.layout === 'modal' ? (
-                      // Modal
-                      // size={current.size}
-                      <div> 
-                        {current.component && current.component(openFn)}
-                      </div>
-                    ) : (
-                      // LeftPanel
-                      // size={current.size}
-                      <div> 
-                        {current.component && current.component(openFn)}
-                      </div>
-                    );
-                  }
-                }}
-              </FormStateModelManagerProvider>
-            </div>
-          );
-        }}
-      </PloniCtxProvider>
+            <Pages />
+            <FormStateModelManagerProvider open={openFn}>
+              <>
+                {
+                  current?.layout === 'modal' ? (
+                    // Modal
+                    // size={current.size}
+                    <div>
+                      Gady
+                      {current?.component && <current.component openFn={openFn} />}
+                    </div>
+                  ) : (
+                    // LeftPanel
+                    // size={current.size}
+                    <div>
+                      {current?.component && <current.component openFn={openFn} />}
+                    </div>
+                  )
+                }
+              </>
+            </FormStateModelManagerProvider>
+          </div>
+        );
+      }} />
     );
   }
 }
