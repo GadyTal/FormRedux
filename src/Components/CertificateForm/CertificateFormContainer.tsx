@@ -1,10 +1,9 @@
 import React from "react";
-import { CertificateFormPresentation } from "./CertificateFormPresentation";
 
-export const CertificateFormContainer = (props: any) => {
-  const { dispatch, changePage, openFn } = props;
+export const CertificateFormContainer: React.FC<{ renderProp: (onSubmit: (data: any) => JSX.Element)}> = (props) => {
+  const { renderProp } = props;
+  
   const onSubmit = (data: any) => {
-    // pub(data);
     dispatch('table.optimitiic.cert', data); // clientCertTable
     // api(data).then(res => {
     //   dispatch<CertificateModel>('formStateManager.save.cert', {
@@ -15,5 +14,5 @@ export const CertificateFormContainer = (props: any) => {
     // });
   };
 
-  return <CertificateFormPresentation changePage={changePage} openFn={openFn} onSubmit={onSubmit} />;
+  return renderProp(onSubmit);
 };

@@ -1,32 +1,16 @@
-import React, { useEffect } from 'react';
-import { useFormStateManger } from '../../Context/FormManagerStateCtx/FormManagerStateCtx';
-import { usePloni } from '../../Context/PloniCtx/PloniContext';
-import { RuleFormPager } from '../RuleForm/helpers';
-import { useRuleReducer } from './reducers';
+import React from 'react';
+import { useLayoutOpener } from '../../Context/PloniCtx/PloniContext';
+import { RuleFormPager } from '../RuleForm/RuleFormPager';
 
 export const RuleTable: React.FC<{}> = props => {
-  const { open } = usePloni();
-  // const { handleSubmit } = useStateManager();
-  const { register, deRegister } = useFormStateManger();
-  const { dispatch, state } = useRuleReducer();
-
-  useEffect(() => {
-    register(dispatch);
-
-    () => {
-      deRegister();
-    };
-  }, []);
+  const { open } = useLayoutOpener();
 
   return (
     <div>
       Rule table
-      {/* {rules.map(e => (
-        <div>{e.name}</div>
-      ))} */}
       <button
         onClick={() =>
-          open({ layout: 'modal', component: RuleFormPager(dispatch) })
+          open({ layout: 'modal', component: RuleFormPager })
         }
       >
         open rule form
@@ -35,9 +19,8 @@ export const RuleTable: React.FC<{}> = props => {
         onClick={() => {
           open({
             layout: 'modal',
-            component: RuleFormPager(dispatch)
+            component: RuleFormPager
           });
-          openFormManagertateInitial(data);
         }}
       >
         Create

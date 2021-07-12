@@ -1,18 +1,17 @@
-// RuleTable => RuleFormContainer @dispatch
-export const RuleFormContainer: React.FC<{}> = (props: any) => {
-  const { dispatch, changePage, openFn } = props;
-  // const FormStateManager = useContext(FormStateManager);
+import React from "react";
 
-  const onSubmit = data => {
-    // dispatch('optimitiic', data); // table
-    // api(data).then(res => {
-    //   dispatch<RuleModel>('formStateManager.save', {
-    //     ...payload,
-    //     type: 'Cert'
-    //   }); // formStateManager
-    //   dispatch<RuleModel>('table.save', { ...payload }); // table
-    // });
+export const RuleFormContainer: React.FC<{ renderProp: (onSubmit: (data: any) => JSX.Element)}> = (props) => {
+  const { renderProp } = props;
+
+  const onSubmit = (data: any) => {
+    api(data).then(res => {
+      dispatch<RuleModel>('formStateManager.save', {
+        ...payload,
+        type: 'Cert'
+      });
+      dispatch<RuleModel>('table.save', { ...payload }); // table
+    });
   };
 
-  return (changPage, open) => children(changePage, open, onSubmit);
+  return renderProp(onSubmit)
 };
