@@ -5,7 +5,7 @@ export interface PagerPresenationComponentProps {
 export interface CurrentOpen {
   layout: 'modal' | 'rightPanel';
   component: React.FC<PagerPresenationComponentProps>;
-  size: Record<string, string>;
+  size?: Record<string, string>;
 }
 
 export type OpenComponentFn = (current: CurrentOpen) => void;

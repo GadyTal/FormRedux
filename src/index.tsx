@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import PloniCtxProvider from './Context/PloniCtx/PloniContext';
 import { RuleTable } from './Components/RuleTable/RuleTable';
 import { FormStateModelManagerProvider } from './Context/FormManagerStateCtx/FormManagerStateCtx';
+import PloniCtxProvider from './Context/PloniCtx/PloniContext';
+import { CurrentOpen } from './Types/types';
 
-interface AppProps {}
+interface AppProps { }
 
 interface AppState {
   name: string;
@@ -14,16 +15,8 @@ const Pages = () => {
   return <RuleTable />;
 };
 
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue
-} from 'recoil';
-
 class App extends Component<AppProps, AppState> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       name: 'React'
@@ -36,32 +29,27 @@ class App extends Component<AppProps, AppState> {
         {(current: CurrentOpen, openFn: (current: CurrentOpen) => void) => {
           return (
             <div>
-              <RecoilRoot>
-                <Pages />
-                <FormStateModelManagerProvider>
-                  {open => {
-                    return;
-                    {
-                      console.log(
-                        current.component && current.component(openFn)
-                      );
-                    }
-                    {
-                      current.layout === 'modal' ? (
-                        // Modal
-                        <div size={current.size}>
-                          {current.component && current.component(openFn)}
-                        </div>
-                      ) : (
-                        // LeftPanel
-                        <div size={current.size}>
-                          {current.component && current.component(openFn)}
-                        </div>
-                      );
-                    }
-                  }}
-                </FormStateModelManagerProvider>
-              </RecoilRoot>
+
+              <Pages />
+              <FormStateModelManagerProvider open={openFn}>
+                {(openFn: any) => {
+                  {
+                    current.layout === 'modal' ? (
+                      // Modal
+                      // size={current.size}
+                      <div> 
+                        {current.component && current.component(openFn)}
+                      </div>
+                    ) : (
+                      // LeftPanel
+                      // size={current.size}
+                      <div> 
+                        {current.component && current.component(openFn)}
+                      </div>
+                    );
+                  }
+                }}
+              </FormStateModelManagerProvider>
             </div>
           );
         }}
