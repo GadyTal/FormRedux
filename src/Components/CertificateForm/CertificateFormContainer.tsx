@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
+import { CertificateFormPresentation } from "../CertificateFormPresentation";
 
-const CertificateFormContainer = ({ tableDispacher, formstateDischer }) => {
-  const FormStateManager = useContext(FormStateManager);
-
+const CertificateFormContainer = ({ dispatch }) => {
   const onSubmit = data => {
     // pub(data);
-    tabledispatcher('table.optimitiic.cert', data); // clientCertTable
+    dispatch('table.optimitiic.cert', data); // clientCertTable
     api(data).then(res => {
       dispatch<CertificateModel>('formStateManager.save.cert', {
         ...payload,
