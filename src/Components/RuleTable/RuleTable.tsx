@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { useLayoutOpener } from '../../Context/LayoutOpenerCtx/LayoutOpenerCtx';
 import { RuleFormPager } from '../RuleForm/RuleFormPager';
 
-export const RuleTable: React.FC<{}> = props => {
+const RuleTable: React.FC<{}> = props => {
   const { openFn } = useLayoutOpener();
 
   return (
@@ -28,3 +29,5 @@ export const RuleTable: React.FC<{}> = props => {
     </div>
   );
 };
+
+export default connect((state) => { return { rules: state.entities } })(RuleTable);

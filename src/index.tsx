@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import { RuleTable } from './Components/RuleTable/RuleTable';
 import { FormStateModelManagerProvider } from './Context/FormManagerStateCtx/FormManagerStateCtx';
 import LayoutOpenerProvider from './Context/LayoutOpenerCtx/LayoutOpenerCtx';
+import { store } from './Store/store';
 import { CurrentOpen } from './Types/types';
+
 
 interface AppProps { }
 
@@ -57,4 +60,4 @@ class App extends Component<AppProps, AppState> {
   }
 }
 
-render(<App />, document.getElementById('root'));
+render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
