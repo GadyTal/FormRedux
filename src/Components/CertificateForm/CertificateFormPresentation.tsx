@@ -54,6 +54,6 @@ export const CertificateFormPresentation: React.FC<PagerPresenationComponentProp
     </button>
     {/* <button onClick={changePage('init')} value={'Go back to rule form'} /> */}
 
-    <input type={'submit'} value={'Submit'} onClick={() => onSubmitHandler()}/>
+    <input type={'submit'} value={'Submit'} />
   </>)
 };

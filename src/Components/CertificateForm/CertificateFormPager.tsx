@@ -2,7 +2,7 @@ import React from "react";
 import { usePager } from "../../hooks/usePager/usePager";
 import { OpenComponentFn } from "../../Types/types";
 import { FormContainer } from "../FormContainer";
-import { CertificateFormContainer } from "./CertificateFormContainer";
+import CertificateFormContainer from "./CertificateFormContainer";
 import { CertificateFormPresentation } from "./CertificateFormPresentation";
 
 export const ruleFormSchema = {};
@@ -14,20 +14,19 @@ export const CertificateFormStateMachine = {
   }
 };
 
-export const CertificatePager: React.FC<{openFn: OpenComponentFn}> = ({
-  openFn
+export const CertificatePager: React.FC<{openFn: OpenComponentFn, close: () => void}> = ({
+  openFn, close
 }) => {
   const { changePage, currentPage } = usePager(
     CertificateFormStateMachine
   );
 
   return (
-    <CertificateFormContainer renderProp={(onSubmit) => {
-      if (!currentPage) return <></>;
-      
-      return <FormContainer schema={currentPage.schema} onSubmit={(data) => {
+    <CertificateFormContainer renderProp={(initState, onSubmit) => {
+      return <FormContainer schema={currentPage.schema} initialState={initState} onSubmit={(data) => {
         onSubmit(data);
-      }} formName={"Rule Form Container"} renderProps={(validation, formState, errors, setFormState) => {
+        close();
+      }} formName={"Cert container"} renderProps={(validation, formState, errors, setFormState) => {
         return (
           <currentPage.Component changePage={changePage} openFn={openFn} errors={errors} state={formState} setFormState={setFormState} />
         )

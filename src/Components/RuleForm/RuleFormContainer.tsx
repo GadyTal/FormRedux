@@ -1,33 +1,42 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { saveEntity, deleteEntity, updateEntity, AppDispatch } from "../../Store/store";
+import { saveEntity, deleteEntity, updateEntity, editEntity, RuleEntity, RootState } from "../../Store/store";
 
 interface RuleFormConainerProps extends  PropsFromRedux {
-  renderProp: (onSubmit: (data: any) => void) => JSX.Element;
+  renderProp: (initState: Record<string,any>, onSubmit: (data: any) => Promise<string>, localEditEntity: (data?: RuleEntity) => void
+  ) => JSX.Element;
 }
 
 export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
-  const { renderProp, saveEntity } = props;
+  const { renderProp, saveEntity, editEntity, currentEditEntity = {} } = props;
 
-  const onSubmit = (data: any) => {
-    
-    api(data).then(res => {
-      saveEntity(res);
-      // dispatch<RuleModel>('formStateManager.save', {
-      //   ...payload,
-      //   type: 'Cert'
-      // });
-      // dispatch<RuleModel>('table.save', { ...payload }); // table
-    });
+  const onSubmit = (data: RuleEntity = {name: "Rule1", id: "1"}) => {
+    return new Promise<string>((res, rej) => {
+      setTimeout(() => {
+        if(currentEditEntity) {
+          saveEntity(data)
+          res('finish');
+        } else {
+          rej('no edit entity')
+        }
+      }, 3000)
+    })
   };
 
-  return renderProp(onSubmit)
+  const localEditEntity = (data: RuleEntity = {name: "Rule1", id: "1"}) => {
+    props.editEntity(data);
+  }
+
+  return renderProp(currentEditEntity, onSubmit, localEditEntity)
 };
 
-const connector = connect(null, {
+const connector = connect((state: RootState) => ({
+  currentEditEntity: state.rule.currentEditEntity
+}), {
   saveEntity,
   deleteEntity,
-  updateEntity
+  updateEntity,
+  editEntity
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>

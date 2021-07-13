@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import RuleTable from './Components/RuleTable/RuleTable';
-import { FormStateModelManagerProvider } from './Context/FormManagerStateCtx/FormManagerStateCtx';
 import LayoutOpenerProvider from './Context/LayoutOpenerCtx/LayoutOpenerCtx';
 import { store } from './Store/store';
-import { CurrentOpen } from './Types/types';
 
 
 interface AppProps { }
@@ -28,31 +26,29 @@ class App extends Component<AppProps, AppState> {
 
   render() {
     return (
-      <LayoutOpenerProvider renderProps={(current: CurrentOpen, openFn: (current: CurrentOpen) => void) => {
+      <LayoutOpenerProvider renderProps={(current, openFn, close) => {
         return (
           <div>
 
             <Pages />
-            <FormStateModelManagerProvider open={openFn}>
-              <>
+            <>
                 {
                   current?.layout === 'modal' ? (
                     // Modal
                     // size={current.size}
                     <div>
                       Gady
-                      {current?.component && <current.component openFn={openFn} />}
+                      {current?.component && <current.component close={close} openFn={openFn} />}
                     </div>
                   ) : (
                     // LeftPanel
                     // size={current.size}
                     <div>
-                      {current?.component && <current.component openFn={openFn} />}
+                      {current?.component && <current.component close={close} openFn={openFn} />}
                     </div>
                   )
                 }
               </>
-            </FormStateModelManagerProvider>
           </div>
         );
       }} />

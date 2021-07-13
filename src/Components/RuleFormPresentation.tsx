@@ -6,21 +6,24 @@ export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({
   return (
     <>
       <div>RuleFormPresentaions</div>
-      <div>Cert: {(state.cert || { cert: {} }).certId}</div>
+      <div>Cert: {(state.certificateModel || { certificateModel: {} }).name}</div>
       <input
         name={'name'}
+        placeholder={"name"}
         value={state.name}
         onChange={e => setFormState({ name: e.target.value })}
       />
       <div>{errors.name}</div>
       <input
         name={'action'}
+        placeholder={"action"}
         value={state.action}
         onChange={e => setFormState({ action: e.target.value })}
       />
       <div>{errors.action}</div>
       <input
         name={'sshProfile'}
+        placeholder={"sshProfile"}
         value={state.sshProfile}
         onChange={e => setFormState({ sshProfile: e.target.value })}
       />

@@ -9,7 +9,7 @@ export interface PagerPresenationComponentProps {
 
 export interface CurrentOpen {
   layout: 'modal' | 'rightPanel';
-  component: React.FC<{openFn: OpenComponentFn}>;
+  component: React.FC<{openFn: OpenComponentFn, close: () => void}> | null;
   size?: Record<string, string>;
 }
 

@@ -24,7 +24,7 @@ const RuleAdvanceSettingsFormPresentation: React.FC<PagerPresenationComponentPro
   };
 
   return (
-    <FormContainer schema={{}} onSubmit={onSubmitHandler} formName={name} renderProps={(validation, formState, errors, setFormState) => (
+    <FormContainer schema={{}} initialState={{}} onSubmit={onSubmitHandler} formName={name} renderProps={(validation, formState, errors, setFormState) => (
       <>
         <input
           name={'something'}

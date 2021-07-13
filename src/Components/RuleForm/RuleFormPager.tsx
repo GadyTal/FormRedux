@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { usePager } from '../../hooks/usePager/usePager';
-import { OpenComponentFn } from '../../Types/types';
+import { CurrentOpen, OpenComponentFn } from '../../Types/types';
 import { FormContainer } from '../FormContainer';
 import RuleAdvanceSettingsFormPresentation from '../RuleAdvanceSettingsFormPresentation';
 import { RuleFormPresentation } from '../RuleFormPresentation';
@@ -19,21 +20,26 @@ export const RuleFormStateMachine = {
   }
 };
 
-export const RuleFormPager: React.FC<{openFn: OpenComponentFn}> = ({
-  openFn
+export const RuleFormPager: React.FC<{openFn: OpenComponentFn, close: () => void}> = ({
+  openFn,
+  close
 }) => {
   const { changePage, currentPage } = usePager(
     RuleFormStateMachine
   );
 
   return (
-    <RuleFormContainer renderProp={(onSubmit) => {
-      return <FormContainer schema={currentPage.schema} onSubmit={(data) => {
-        onSubmit(data);
-        // openFn()
+    <RuleFormContainer  renderProp={(initState,onSubmit, editEntity) => {
+      return <FormContainer schema={currentPage.schema} initialState={initState} onSubmit={(data) => {
+        onSubmit(data).then(res => {
+          close();
+        })
       }} formName={"Rule Form Container"} renderProps={(validation, formState, errors, setFormState) => {
         return (
-          <currentPage.Component changePage={changePage} openFn={openFn} errors={errors} state={formState} setFormState={setFormState} />
+          <currentPage.Component changePage={changePage} openFn={(current: CurrentOpen) => {
+            openFn(current);
+            editEntity(formState)
+          }} errors={errors} state={formState} setFormState={setFormState} />
         )
       }} />
     }} />
