@@ -1,6 +1,7 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { saveCertEntity, deleteCertEntity, updateCertEntity, CertEntity } from "../../Store/store";
+import { CertEntity } from "../../Store/certificateStore";
+import { deleteCertEntity, saveCertEntity, updateCertEntity } from "../../Store/store";
 
 interface CertificateFormConainerProps extends  PropsFromRedux {
   renderProp: (initState: Record<string,any>, onSubmit: (data: any) => void) => JSX.Element;

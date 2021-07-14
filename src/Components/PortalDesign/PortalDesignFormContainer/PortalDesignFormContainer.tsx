@@ -1,20 +1,21 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { saveEntity, deleteEntity, updateEntity, editEntity, RuleEntity, RootState } from "../../../Store/store";
+import { PortalDesignEntity } from "../../../Store/portalDesignStore";
+import { deletePortalDesignEntity, RootState, savePortalDesignEntity, updatePortalDesignEntity } from "../../../Store/store";
 
-interface PortalDesignFormContainerProps extends  PropsFromRedux {
-  renderProp: (initState: Record<string,any>, onSubmit: (data: any) => Promise<string>, localEditEntity: (data?: RuleEntity) => void
+interface PortalDesignFormContainerProps extends PropsFromRedux {
+  renderProp: (initState: Record<string, any>, onSubmit: (data: any) => Promise<string>, localEditEntity: (data?: PortalDesignEntity) => void
   ) => JSX.Element;
 }
 
-export const PortalDesignFormContainer: React.FC<PortalDesignFormContainerProps> = (props) => {
-  const { renderProp, saveEntity, editEntity, currentEditEntity = {} } = props;
+const PortalDesignFormContainer: React.FC<PortalDesignFormContainerProps> = (props) => {
+  const { renderProp, savePortalDesignEntity, updatePortalDesignEntity, currentEditEntity = {} } = props;
 
-  const onSubmit = (data: RuleEntity = {name: "Pd", id: "1"}) => {
+  const onSubmit = (data: PortalDesignEntity = { name: "Pd", id: "1" }) => {
     return new Promise<string>((res, rej) => {
       setTimeout(() => {
-        if(currentEditEntity) {
-          saveEntity(data)
+        if (currentEditEntity) {
+          savePortalDesignEntity(data)
           res('finish');
         } else {
           rej('no edit entity')
@@ -23,20 +24,17 @@ export const PortalDesignFormContainer: React.FC<PortalDesignFormContainerProps>
     })
   };
 
-  const localEditEntity = (data: RuleEntity = {name: "Pd", id: "1"}) => {
-    props.editEntity(data);
+  const localEditEntity = (data: PortalDesignEntity = { name: "Pd", id: "1" }) => {
+    updatePortalDesignEntity(data);
   }
 
   return renderProp(currentEditEntity, onSubmit, localEditEntity)
 };
 
 const connector = connect((state: RootState) => ({
-  currentEditEntity: state.rule.form.current
+  currentEditEntity: state.portalDesign.form.current
 }), {
-  saveEntity,
-  deleteEntity,
-  updateEntity,
-  editEntity
+  savePortalDesignEntity, deletePortalDesignEntity, updatePortalDesignEntity
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
 import { usePager } from '../../hooks/usePager/usePager';
 import { CurrentOpen, OpenComponentFn } from '../../Types/types';
 import { FormContainer } from '../FormContainer';
