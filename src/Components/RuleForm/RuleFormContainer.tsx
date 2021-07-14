@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { saveEntity, deleteEntity, updateEntity, editEntity, RuleEntity, RootState } from "../../Store/store";
+import { saveEntity, deleteEntity, updateEntity, editEntity, RuleEntity, RootState, store } from "../../Store/store";
 
 interface RuleFormConainerProps extends  PropsFromRedux {
   renderProp: (initState: Record<string,any>, onSubmit: (data: any) => Promise<string>, localEditEntity: (data?: RuleEntity) => void
   ) => JSX.Element;
+  entityId?: string;
 }
 
 export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
-  const { renderProp, saveEntity, editEntity, currentEditEntity = {} } = props;
+  const { renderProp, saveEntity, editEntity, currentEditEntity = {}, rules } = props;
+
+  useEffect(() => {
+    if (props.entityId) {
+      const rule = rules.find((rule) => rule.id === props.entityId;
+      if (rule) {
+        editEntity(rule);
+      } else {
+        editEntity({} as RuleEntity)
+      }
+    }
+  })
 
   const onSubmit = (data: RuleEntity = {name: "Rule1", id: "1"}) => {
     return new Promise<string>((res, rej) => {
@@ -31,7 +43,8 @@ export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
 };
 
 const connector = connect((state: RootState) => ({
-  currentEditEntity: state.rule.form.current
+  currentEditEntity: state.rule.form.current,
+  rules: state.rule.entities
 }), {
   saveEntity,
   deleteEntity,

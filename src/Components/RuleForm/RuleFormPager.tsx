@@ -20,16 +20,17 @@ export const RuleFormStateMachine = {
   }
 };
 
-export const RuleFormPager: React.FC<{openFn: OpenComponentFn, close: () => void}> = ({
+export const RuleFormPager: React.FC<{openFn: OpenComponentFn, close: () => void, entityId?: string}> = ({
   openFn,
-  close
+  close,
+  entityId
 }) => {
   const { changePage, currentPage } = usePager(
     RuleFormStateMachine
   );
 
   return (
-    <RuleFormContainer  renderProp={(initState,onSubmit, editEntity) => {
+    <RuleFormContainer entityId={entityId} renderProp={(initState,onSubmit, editEntity) => {
       return <FormContainer schema={currentPage.schema} initialState={initState} onSubmit={(data) => {
         onSubmit(data).then(res => {
           close();

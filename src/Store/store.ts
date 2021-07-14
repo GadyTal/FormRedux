@@ -1,4 +1,5 @@
 import { Action, configureStore, createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
+import { CurrentOpen } from '../Types/types';
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
