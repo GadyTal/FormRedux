@@ -1,59 +1,49 @@
+import { Modal } from '@material-ui/core';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import RuleTable from './Components/RuleTable/RuleTable';
 import LayoutOpenerProvider from './Context/LayoutOpenerCtx/LayoutOpenerCtx';
 import { store } from './Store/store';
-
-
-interface AppProps { }
-
-interface AppState {
-  name: string;
-}
+import { Drawer } from '@material-ui/core';
+import { CurrentOpen, OpenComponentFn } from './Types/types';
 
 const Pages = () => {
   return <RuleTable />;
 };
 
-class App extends Component<AppProps, AppState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      name: 'React'
-    };
-  }
+const App = () => {
+  
+  
+  const getLayout = (current: CurrentOpen, openFn: OpenComponentFn, close: () => void) => {
+    if(!current || !current.layout || !current.component) {
+      return null
+    }
 
-  render() {
+    switch(current.layout) {
+      case "modal": 
+        return <Modal open={current.layout === "modal"}>
+                <current.component close={close} openFn={openFn} />
+              </Modal>
+      case "rightPanel": 
+        return <Drawer open={current.layout === 'rightPanel'}>
+                <current.component close={close} openFn={openFn} />
+              </Drawer>
+      default:
+        null
+    }
+  }
+  
+  return <LayoutOpenerProvider renderProps={(current, openFn, close) => {
     return (
-      <LayoutOpenerProvider renderProps={(current, openFn, close) => {
-        return (
-          <div>
-
-            <Pages />
-            <>
-                {
-                  current?.layout === 'modal' ? (
-                    // Modal
-                    // size={current.size}
-                    <div>
-                      Gady
-                      {current?.component && <current.component close={close} openFn={openFn} />}
-                    </div>
-                  ) : (
-                    // LeftPanel
-                    // size={current.size}
-                    <div>
-                      {current?.component && <current.component close={close} openFn={openFn} />}
-                    </div>
-                  )
-                }
-              </>
-          </div>
-        );
-      }} />
+      <div>
+        <Pages />
+        {
+          getLayout(current,openFn, close)
+        }
+      </div>
     );
-  }
+  }} />
 }
 
 render(<Provider store={store}><App /></Provider>, document.getElementById('root'));

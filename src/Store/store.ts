@@ -7,13 +7,22 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-const ruleInitialState: { entities: RuleEntity[], currentEditEntity?: RuleEntity } = {
+interface EntitySliceState<Model> {
+  entities: Model[];
+  form: {
+    current?: Model
+  }
+}
+
+const ruleInitialState: EntitySliceState<RuleEntity> = {
   entities: [
     {id: '1', name: 'rulePredfined1'},
     {id: '2', name: 'rulePredfined2'},
     {id: '3', name: 'rulePredfined3'}
   ],
-  currentEditEntity: undefined
+  form: {
+    current: undefined
+  }
 };
 
 export interface RuleEntity {
@@ -22,12 +31,14 @@ export interface RuleEntity {
   certificateModel?: CertEntity
 }
 
-const certInitialState: { entities: RuleEntity[] } = {
+const certInitialState: EntitySliceState<CertEntity> = {
   entities: [
     {id: '1', name: 'certPredfined1'},
     {id: '2', name: 'certPredfined2'},
     {id: '3', name: 'certPredfined3'}
-  ]
+  ],
+  form: {
+  }
 };
 
 export const certificateSlice = createSlice({
@@ -82,13 +93,13 @@ export const ruleSlice = createSlice({
       }
     },
     editEntity: (state, action: PayloadAction<RuleEntity>) => {
-      state.currentEditEntity = action.payload
+      state.form.current = action.payload
     },
   },
   extraReducers: (builder) => {
     builder.addCase(certificateSlice.actions.saveCertEntity, (state, action) => {
-      if (state.currentEditEntity) {
-        state.currentEditEntity = {...state.currentEditEntity, certificateModel: action.payload }
+      if (state.form.current) {
+        state.form.current = {...state.form.current, certificateModel: action.payload }
       }
     })
   }

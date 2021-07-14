@@ -1,16 +1,16 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { saveEntity, deleteEntity, updateEntity, editEntity, RuleEntity, RootState } from "../../Store/store";
+import { saveEntity, deleteEntity, updateEntity, editEntity, RuleEntity, RootState } from "../../../Store/store";
 
-interface RuleFormConainerProps extends  PropsFromRedux {
+interface PortalDesignFormContainerProps extends  PropsFromRedux {
   renderProp: (initState: Record<string,any>, onSubmit: (data: any) => Promise<string>, localEditEntity: (data?: RuleEntity) => void
   ) => JSX.Element;
 }
 
-export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
+export const PortalDesignFormContainer: React.FC<PortalDesignFormContainerProps> = (props) => {
   const { renderProp, saveEntity, editEntity, currentEditEntity = {} } = props;
 
-  const onSubmit = (data: RuleEntity = {name: "Rule1", id: "1"}) => {
+  const onSubmit = (data: RuleEntity = {name: "Pd", id: "1"}) => {
     return new Promise<string>((res, rej) => {
       setTimeout(() => {
         if(currentEditEntity) {
@@ -23,7 +23,7 @@ export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
     })
   };
 
-  const localEditEntity = (data: RuleEntity = {name: "Rule1", id: "1"}) => {
+  const localEditEntity = (data: RuleEntity = {name: "Pd", id: "1"}) => {
     props.editEntity(data);
   }
 
@@ -41,4 +41,4 @@ const connector = connect((state: RootState) => ({
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-export default connector(RuleFormContainer);
+export default connector(PortalDesignFormContainer);

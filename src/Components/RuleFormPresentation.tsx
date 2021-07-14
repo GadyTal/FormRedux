@@ -31,7 +31,7 @@ export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({
       <button
         onClick={() => {
           openFn({
-            layout: 'modal',
+            layout: 'rightPanel',
             component: CertificatePager
           });
         }}
