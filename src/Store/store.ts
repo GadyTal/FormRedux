@@ -26,10 +26,6 @@ export const store = configureStore({
   },
 });
 
-export const { saveRuleEntity, deleteRuleEntity, updateRuleEntity, editRuleFormEntity } = ruleSlice.actions
-export const { saveCertEntity, deleteCertEntity, updateCertEntity } = certificateSlice.actions
-export const { savePortalDesignEntity, deletePortalDesignEntity, updatePortalDesignEntity } = portalDesignSlice.actions
-
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}

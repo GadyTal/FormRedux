@@ -1,21 +1,21 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { RuleEntity } from "../../Store/ruleStore";
-import { deleteRuleEntity, editRuleFormEntity, RootState, saveRuleEntity, updateRuleEntity } from "../../Store/store";
+import { deleteEntity, editFormEntity, RuleEntity, saveEntity, updateEntity } from "../../Store/ruleStore";
+import { RootState } from "../../Store/store";
 
-interface RuleFormConainerProps extends  PropsFromRedux {
-  renderProp: (initState: Record<string,any>, onSubmit: (data: any) => Promise<string>, localEditEntity: (data?: RuleEntity) => void
+interface RuleFormConainerProps extends PropsFromRedux {
+  renderProp: (initState: Record<string, any>, onSubmit: (data: any) => Promise<string>, localEditEntity: (data?: RuleEntity) => void
   ) => JSX.Element;
 }
 
 export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
-  const { renderProp, saveRuleEntity, editRuleFormEntity, currentEditEntity = {} } = props;
+  const { renderProp, saveEntity, editFormEntity, currentEditEntity = {} } = props;
 
-  const onSubmit = (data: RuleEntity = {name: "Rule1", id: "1"}) => {
+  const onSubmit = (data: RuleEntity = { name: "Rule1", id: "1" }) => {
     return new Promise<string>((res, rej) => {
       setTimeout(() => {
-        if(currentEditEntity) {
-          saveRuleEntity(data)
+        if (currentEditEntity) {
+          saveEntity(data)
           res('finish');
         } else {
           rej('no edit entity')
@@ -24,8 +24,8 @@ export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
     })
   };
 
-  const localEditEntity = (data: RuleEntity = {name: "Rule1", id: "1"}) => {
-    editRuleFormEntity(data);
+  const localEditEntity = (data: RuleEntity = { name: "Rule1", id: "1" }) => {
+    editFormEntity(data);
   }
 
   return renderProp(currentEditEntity, onSubmit, localEditEntity)
@@ -34,10 +34,7 @@ export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
 const connector = connect((state: RootState) => ({
   currentEditEntity: state.Rule.form.current
 }), {
-  saveRuleEntity,
-  deleteRuleEntity,
-  updateRuleEntity,
-  editRuleFormEntity
+  deleteEntity, editFormEntity, saveEntity, updateEntity
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>

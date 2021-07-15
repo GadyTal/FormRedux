@@ -18,19 +18,19 @@ export const certificateSlice = createSlice({
   initialState: certInitialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    saveCertEntity: (state, action: PayloadAction<CertEntity>) => {
+    saveEntity: (state, action: PayloadAction<CertEntity>) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.entities = [...state.entities, action.payload]; //table
     },
-    deleteCertEntity: (state, action: PayloadAction<CertEntity>) => {
+    deleteEntity: (state, action: PayloadAction<CertEntity>) => {
       const entityToDelete = state.entities.filter(entity => entity.id === action.payload.id);
 
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
-    updateCertEntity: (state, action: PayloadAction<CertEntity>) => {
+    updateEntity: (state, action: PayloadAction<CertEntity>) => {
       const index = state.entities.findIndex((entity) => entity.id == action.payload.id);
       if (index !== -1) {
         state.entities[index] = action.payload;
@@ -40,3 +40,5 @@ export const certificateSlice = createSlice({
 });
 
 export interface CertEntity extends RuleEntity {}
+
+export const { saveEntity, deleteEntity, updateEntity } = certificateSlice.actions;
