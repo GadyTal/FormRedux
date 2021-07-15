@@ -1,4 +1,5 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { EntityType } from '../Types/types';
 import { certificateSlice } from './certificateStore';
 import { portalDesignSlice } from './portalDesignStore';
 import { ruleSlice } from './ruleStore';
@@ -19,9 +20,9 @@ export interface EntitySliceState<Model> {
 
 export const store = configureStore({
   reducer: {
-    rule: ruleSlice.reducer,
-    certificate: certificateSlice.reducer,
-    portalDesign: portalDesignSlice.reducer
+    [EntityType.Rule]: ruleSlice.reducer,
+    [EntityType.Certificate]: certificateSlice.reducer,
+    [EntityType.PortalDesign]: portalDesignSlice.reducer
   },
 });
 

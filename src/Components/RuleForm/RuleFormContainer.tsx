@@ -32,7 +32,7 @@ export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
 };
 
 const connector = connect((state: RootState) => ({
-  currentEditEntity: state.rule.form.current
+  currentEditEntity: state.Rule.form.current
 }), {
   saveRuleEntity,
   deleteRuleEntity,

@@ -14,3 +14,9 @@ export interface CurrentOpen {
 }
 
 export type OpenComponentFn = (current: CurrentOpen) => void;
+
+export enum EntityType {
+  Rule = "Rule",
+  Certificate = "Certificate",
+  PortalDesign = "PortalDesign"
+}

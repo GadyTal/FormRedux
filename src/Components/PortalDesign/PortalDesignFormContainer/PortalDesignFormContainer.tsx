@@ -32,7 +32,7 @@ const PortalDesignFormContainer: React.FC<PortalDesignFormContainerProps> = (pro
 };
 
 const connector = connect((state: RootState) => ({
-  currentEditEntity: state.portalDesign.form.current
+  currentEditEntity: state.PortalDesign.form.current
 }), {
   savePortalDesignEntity, deletePortalDesignEntity, updatePortalDesignEntity
 });

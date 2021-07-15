@@ -1,45 +1,65 @@
-import { CurrentOpen } from '../../Types/types';
+import { useSelector } from 'react-redux';
+import { useLayoutOpener } from '../../Context/LayoutOpenerCtx/LayoutOpenerCtx';
+import { RootState } from '../../Store/store';
+import { CurrentOpen, EntityType } from '../../Types/types';
 
-export function useFormOpener<T>(editEntityAction: (state: any) => void, openFn: any, items: T[]) {
+export const useFormOpener = () => {
+  const { openFn } = useLayoutOpener();
   let isLoading;
 
-  const getData = (entityId?: string) => {
-    // switch (type) {
-    //   case entityType.Gady:
-    //     return gady.getById();
-    // }
-    // Update
-    if (entityId) {
-      const index = items.findIndex((entity: any) => entity.id === entityId);
-      if (index !== -1) {
-        return Promise.resolve(items[index]);
-      }
+  const getStoreSlice = (type: EntityType) => {
+    const storeSlice = useSelector<RootState, any>((state) => state[type]);
 
-      return Promise.resolve({id: entityId});
-    }
+    const entities = storeSlice.entities;
+    const actions = storeSlice.actions;
 
-    // New data
-    return Promise.resolve({id: entityId});
+    return { entities, actions };
   }
   
-  const openEdit = async(currentOpen: CurrentOpen, entityId: string) => {
+  const getData = (entities?: any[], entityId?: string, ) => {
+    // Update
+    if (entityId && entities?.length) {
+      const index = entities.findIndex((entity: any) => entity.id === entityId);
+      if (index !== -1) {
+        return Promise.resolve(entities[index]);
+      }
+
+      return Promise.resolve({ id: entityId });
+    }
+
+    // New data - 
+    return Promise.resolve({ id: entityId });
+  }
+
+
+  // Public
+  const openEdit = async (type: EntityType, currentOpen: CurrentOpen, entityId: string) => {
     isLoading = true;
-    const data = await getData(entityId) // api or defualt
-    await editEntityAction(data); //redux
+    const { entities, actions } = getStoreSlice(type);
+
+    const entity = getData(entities, entityId);
+    if (!entity) {
+      console.error("Can't find entity!");
+      return;
+    }
+
+    debugger;
+    await actions(entity); //redux
 
     isLoading = false;
     openFn(currentOpen) // open layout
   }
 
-  const openCreate = async(currentOpen: CurrentOpen) => {
+  const openCreate = async (currentOpen: CurrentOpen) => {
     isLoading = true;
     const data = await getData() // default
-    await editEntityAction(data);
+    debugger;
+    // await actions(data);
 
     isLoading = false;
     openFn(currentOpen)
-  } 
-  
+  }
+
   return {
     openEdit,
     openCreate,

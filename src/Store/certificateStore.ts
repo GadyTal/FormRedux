@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { EntityType } from '../Types/types';
 import { RuleEntity } from './ruleStore';
 import { EntitySliceState } from "./store";
 
@@ -13,7 +14,7 @@ const certInitialState: EntitySliceState<CertEntity> = {
 };
 
 export const certificateSlice = createSlice({
-  name: 'cert',
+  name: EntityType.Certificate,
   initialState: certInitialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {

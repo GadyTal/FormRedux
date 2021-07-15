@@ -4,12 +4,13 @@ import { useLayoutOpener } from '../../Context/LayoutOpenerCtx/LayoutOpenerCtx';
 import { useFormOpener } from '../../hooks/useFormOpener/useFormOpeners';
 import { RuleEntity } from '../../Store/ruleStore';
 import { deleteRuleEntity, editRuleFormEntity, RootState } from '../../Store/store';
+import { EntityType } from '../../Types/types';
 import { RuleFormPager } from '../RuleForm/RuleFormPager';
 
 const RuleTable: React.FC<PropsFromRedux> = props => {
   const { editRuleFormEntity, deleteRuleEntity, rules } = props;
   const { openFn } = useLayoutOpener();
-  const { openEdit, openCreate, isLoading } = useFormOpener<RuleEntity>(editRuleFormEntity, openFn, rules);
+  const { openEdit, openCreate, isLoading } = useFormOpener();
 
   return (
     <div>
@@ -23,12 +24,13 @@ const RuleTable: React.FC<PropsFromRedux> = props => {
         open rule form
       </button>
 
-      {rules.map(entity => <div>{entity.name}
+      {rules.map((entity: RuleEntity, index: number) => <div>{entity.name}
 
         <button
+          key={entity.name + "-" + index}
           onClick={() => {
             // Edit
-            openEdit({ layout: 'modal', component: RuleFormPager }, entity.id);
+            openEdit(EntityType.Rule, { layout: 'modal', component: RuleFormPager, size: {} }, entity.id);
           }}
         >
           edit
@@ -40,7 +42,7 @@ const RuleTable: React.FC<PropsFromRedux> = props => {
 
 
 
-const connector = connect((state: RootState) => { return { rules: state.rule.entities } }, {
+const connector = connect((state: RootState) => { return { rules: state.Rule.entities } }, {
   editRuleFormEntity,
   deleteRuleEntity,
 });

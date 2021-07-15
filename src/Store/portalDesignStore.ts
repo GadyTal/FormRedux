@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { EntityType } from '../Types/types';
 import { EntitySliceState } from "./store";
 
 export interface PortalDesignEntity {
@@ -17,7 +18,7 @@ const portalDesignInitialState: EntitySliceState<PortalDesignEntity> = {
 };
 
 export const portalDesignSlice = createSlice({
-  name: 'portalDesign',
+  name: EntityType.PortalDesign,
   initialState: portalDesignInitialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
