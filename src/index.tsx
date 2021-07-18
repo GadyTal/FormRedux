@@ -2,7 +2,7 @@ import { Drawer, Modal } from '@material-ui/core';
 import React, { useState } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { PortalDesignFormPager } from './Components/PortalDesign/PortalDesignPager';
+// import { PortalDesignFormPager } from './Components/PortalDesign/PortalDesignPager';
 import RuleTable from './Components/RuleTable/RuleTable';
 import LayoutOpenerProvider from './Context/LayoutOpenerCtx/LayoutOpenerCtx';
 import { store } from './Store/store';
@@ -43,18 +43,25 @@ const App = () => {
     return (
       <div>
         <button
-        onClick={() => {
-          setFullPageForm(!fullPageForm);
-        }}>{fullPageForm ? "Close" : "Open"} Portal Design</button>
-        
-      {fullPageForm ? <PortalDesignFormPager openFn={openFn} close={close} /> :
+          onClick={() => {
+            setFullPageForm(!fullPageForm);
+          }}>{fullPageForm ? "Close" : "Open"} Portal Design</button>
+
+        {/* {fullPageForm ? <PortalDesignFormPager openFn={openFn} close={close} /> :
           <>
             <Pages />
             {
               getLayout(current, openFn, close)
             }
           </>
-        }
+        } */}
+
+        <>
+          <Pages />
+          {
+            getLayout(current, openFn, close)
+          }
+        </>
 
       </div>
     );

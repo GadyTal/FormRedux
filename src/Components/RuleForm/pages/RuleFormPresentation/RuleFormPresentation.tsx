@@ -1,6 +1,6 @@
 import React from 'react';
-import { PagerPresenationComponentProps } from '../Types/types';
-import { CertificatePager } from './CertificateForm/CertificateFormPager';
+import { PagerPresenationComponentProps } from '../../../../Types/types';
+import { CertificatePager } from '../../../CertificateForm/CertificateFormPager';
 
 export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({ errors, state, setFormState, openFn, changePage }) => {
   return (
@@ -11,21 +11,21 @@ export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({
         name={'name'}
         placeholder={"name"}
         value={state.name}
-        onChange={e => setFormState({ name: e.target.value })}
+        onChange={setFormState}
       />
       <div>{errors.name}</div>
       <input
         name={'action'}
         placeholder={"action"}
         value={state.action}
-        onChange={e => setFormState({ action: e.target.value })}
+        onChange={setFormState}
       />
       <div>{errors.action}</div>
       <input
         name={'sshProfile'}
         placeholder={"sshProfile"}
         value={state.sshProfile}
-        onChange={e => setFormState({ sshProfile: e.target.value })}
+        onChange={setFormState}
       />
       <div>{errors.sshProfile}</div>
       <button
@@ -38,7 +38,7 @@ export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({
       >
         Open certificate form
       </button>
-      <button onClick={() => changePage('advanceSettings')}>
+      <button onClick={() => changePage('ADVANCED_SETTINGS')}>
         Go to advance settings
       </button>
       <input type={'submit'} value={'Submit'} />

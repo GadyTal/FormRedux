@@ -1,16 +1,10 @@
-import React from 'react';
+import { useMachine } from '@xstate/react';
 
-export const usePager = (config: any) => {
-  const [currentPage, setCurrentPage] = React.useState(config.init);
-
-  const changePage = (dest: string) => {
-    if (config[dest]) {
-      setCurrentPage(config[dest]);
-    }
-  };
+export const usePager = (stateMachineConfig: any, config2: any) => {
+  const [state, send] = useMachine(stateMachineConfig, config2);
 
   return {
-    currentPage,
-    changePage
+    currentPage: stateMachineConfig.states[state.value as string],
+    changePage: send
   };
 };
