@@ -71,10 +71,11 @@ export const RuleFormPager: React.FC<{ openFn: OpenComponentFn, close: () => voi
         const CurrentComponent = (currentPage.context as any).Component;
 
         return (
-          <CurrentComponent onUiStateChange={(state) => handleUiStateChange({ ...currentUIState, ...state })}
+          <CurrentComponent
+            // onUiStateChange={(state) => handleUiStateChange({ ...currentUIState, ...state })}
+            // handleUiStateChange({ activePageId: currentPage.context.id })
             changePage={changePage} openFn={(current: CurrentOpen) => {
               openFn(current);
-              handleUiStateChange({ activePageId: currentPage.context.id })
               editEntity(formState)
             }} errors={errors} state={formState} setFormState={setFormState} />
         )
