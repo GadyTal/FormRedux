@@ -4,45 +4,26 @@ import { FormContainer } from "./FormContainer";
 import { RuleFormPager } from "./RuleForm/RuleFormPager";
 
 const RuleAdvanceSettingsFormPresentation: React.FC<PagerPresenationComponentProps> = props => {
-  const { changePage, openFn, onSubmit } = props;
-  const name = 'RAdvc';
-
-  const onSubmitHandler = (state: any, updateFormState: any) => {
-    console.log(state);
-    // Promise.resolve({ certId: '123' }).then(res => {
-      updateFormState({ cert: { certId: '123' } });
-      openFn({ layout: 'modal', component: RuleFormPager });
-    // });
-  };
-
-  const onStateChange = (state: any) => {
-    console.log('eState', state);
-
-    let data = {};
-
-    return state[name] || {};
-  };
+  const { changePage, openFn, errors, setFormState, state } = props;
 
   return (
-    <FormContainer schema={{}} initialState={{}} onSubmit={onSubmitHandler} formName={name} renderProps={(validation, formState, errors, setFormState) => (
-      <>
+    <>
         <input
           name={'something'}
-          value={formState.something}
+          value={state.something}
           onChange={setFormState}
         />
         <div>{errors.something}</div>
 
         <input
           name={'other'}
-          value={formState.other}
+          value={state.other}
           onChange={setFormState}
         />
         <div>{errors.other}</div>
 
         <button
-          // onClick={() => open('modal', IpAddressForm)}
-          onClick={() => alert("IpAddressForm")}
+          onClick={() => console.log("IpAddressForm")}
           value={'Open IP address form'}
         />
         <button
@@ -52,7 +33,6 @@ const RuleAdvanceSettingsFormPresentation: React.FC<PagerPresenationComponentPro
 
         <input type={'submit'} value={'Submit'} />
       </>
-    )}/> 
   );
 };
 

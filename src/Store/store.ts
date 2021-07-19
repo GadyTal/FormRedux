@@ -1,5 +1,6 @@
 import { Action, configureStore, createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
 import { CurrentOpen } from '../Types/types';
+import applicationSlice from './applicationSlice';
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -113,6 +114,7 @@ export const store = configureStore({
   reducer: {
     rule: ruleSlice.reducer,
     certificate: certificateSlice.reducer,
+    application: applicationSlice.reducer
   },
 });
 

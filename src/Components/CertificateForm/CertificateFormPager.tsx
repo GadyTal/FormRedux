@@ -1,24 +1,37 @@
 import React from "react";
+import { createMachine } from "xstate";
 import { usePager } from "../../hooks/usePager/usePager";
-import { OpenComponentFn } from "../../Types/types";
+import { OpenComponentFn, PagerPresenationComponentProps } from "../../Types/types";
 import { FormContainer } from "../FormContainer";
 import CertificateFormContainer from "./CertificateFormContainer";
 import { CertificateFormPresentation } from "./CertificateFormPresentation";
 
 export const ruleFormSchema = {};
 
-export const CertificateFormStateMachine = {
-  init: {
-    Component: CertificateFormPresentation,
-    schema: {}
+type LightEvent = { type: 'SUBMIT', schema: object, Component: React.FC<PagerPresenationComponentProps> }
+
+type Schema = { schema: Record<string,any>, Component: React.FC<PagerPresenationComponentProps> }
+
+export const stateMachine = createMachine<Schema, LightEvent, { value: 'init', context: Schema} | { value: 'advanceSettings' , context: Schema}>({
+  initial: 'init',
+  states: {
+    init: {
+      on: {
+        SUBMIT: 'advanceSettings'
+      },
+      context: {
+        schema: {},
+        Component: CertificateFormPresentation
+      }
+    },
   }
-};
+})
 
 export const CertificatePager: React.FC<{openFn: OpenComponentFn, close: () => void}> = ({
   openFn, close
 }) => {
   const { changePage, currentPage } = usePager(
-    CertificateFormStateMachine
+    stateMachine
   );
 
   return (

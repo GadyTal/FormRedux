@@ -1,16 +1,26 @@
+import { useMachine, useSelector } from '@xstate/react';
 import React from 'react';
+import { StateMachine } from 'xstate';
+import { PagerPresenationComponentProps } from '../../Types/types';
 
-export const usePager = (config: any) => {
-  const [currentPage, setCurrentPage] = React.useState(config.init);
+type LightEvent = { type: 'SUBMIT', schema: object, Component: React.FC<PagerPresenationComponentProps> }
 
-  const changePage = (dest: string) => {
-    if (config[dest]) {
-      setCurrentPage(config[dest]);
-    }
-  };
+type Schema = {schema: Record<string,any>, Component: React.FC<PagerPresenationComponentProps>}
+
+export const usePager = (config: StateMachine<Schema, any, LightEvent, {
+  value: 'init';
+  context: Schema;
+} | {
+  value: 'advanceSettings';
+  context: Schema;
+}>) => {
+  const [state, send, service] = useMachine(config);
+  const current = useSelector(service, (state) => state.context);
 
   return {
-    currentPage,
-    changePage
+    currentPage: config.states[state.value as string].context,
+    changePage: (id: string) => {
+      send(id as any);
+    } 
   };
 };

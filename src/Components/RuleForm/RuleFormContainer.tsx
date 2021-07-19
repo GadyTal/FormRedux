@@ -9,18 +9,31 @@ interface RuleFormConainerProps extends  PropsFromRedux {
 }
 
 export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
-  const { renderProp, saveEntity, editEntity, currentEditEntity = {}, rules } = props;
+  const { renderProp, saveEntity, editEntity, currentEditEntity, rules } = props;
 
-  useEffect(() => {
+  const getEntity = () => {
+    if(props.currentEditEntity) {
+      return props.currentEditEntity;
+    }
     if (props.entityId) {
-      const rule = rules.find((rule) => rule.id === props.entityId;
+      const rule = rules.find((rule) => rule.id === props.entityId);
       if (rule) {
-        editEntity(rule);
-      } else {
-        editEntity({} as RuleEntity)
+        return rule;
       }
     }
-  })
+    return { id: "0", name: "fakeinitData"}
+  }
+
+  // useEffect(() => {
+  //   if (props.entityId) {
+  //     const rule = rules.find((rule) => rule.id === props.entityId);
+  //     if (rule) {
+  //       editEntity(rule);
+  //       return
+  //     }
+  //   }
+  //   editEntity({id: "0", name: "fakeInitData"} as RuleEntity)
+  // }, [])
 
   const onSubmit = (data: RuleEntity = {name: "Rule1", id: "1"}) => {
     return new Promise<string>((res, rej) => {
@@ -39,7 +52,7 @@ export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
     props.editEntity(data);
   }
 
-  return renderProp(currentEditEntity, onSubmit, localEditEntity)
+  return renderProp(getEntity(), onSubmit, localEditEntity)
 };
 
 const connector = connect((state: RootState) => ({

@@ -1,26 +1,8 @@
 import React from 'react';
 import { PagerPresenationComponentProps } from '../../Types/types';
-import { RuleFormPager } from '../RuleForm/RuleFormPager';
 
-export const CertificateFormPresentation: React.FC<PagerPresenationComponentProps> = ({ changePage, openFn, onSubmit, errors, setFormState, state }) => {
+export const CertificateFormPresentation: React.FC<PagerPresenationComponentProps> = ({ changePage, openFn, errors, setFormState, state }) => {
   const name = 'Cert';
-
-  const onSubmitHandler = () => {
-    console.log(state);
-
-    // Promise.resolve({ certId: '123' }).then((res: any) => {
-    // updateFormState({ cert: { certId: '123' } });
-    openFn({ layout: 'modal', component: RuleFormPager });
-    // });
-  };
-
-  const onStateChange = (state: any) => {
-    console.log('eState', state);
-
-    let data = {};
-
-    return state[name] || {};
-  };
 
   return (<>
     <div>cert form</div>
