@@ -2,7 +2,6 @@ import { Drawer, Modal } from '@material-ui/core';
 import React, { useState } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-// import { PortalDesignFormPager } from './Components/PortalDesign/PortalDesignPager';
 import RuleTable from './Components/RuleTable/RuleTable';
 import LayoutOpenerProvider from './Context/LayoutOpenerCtx/LayoutOpenerCtx';
 import { store } from './Store/store';

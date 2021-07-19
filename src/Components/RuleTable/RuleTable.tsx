@@ -4,7 +4,7 @@ import { useFormOpener } from '../../hooks/useFormOpener/useFormOpener';
 import { deleteEntity, editFormEntity, RuleEntity } from '../../Store/ruleStore';
 import { RootState } from '../../Store/store';
 import { EntityType } from '../../Types/types';
-import { RuleFormPager } from '../RuleForm/RuleFormPager';
+import RuleFormPager from '../RuleForm/RuleFormPager';
 
 const RuleTable: React.FC<PropsFromRedux> = props => {
   const { editFormEntity, deleteEntity, rules } = props;

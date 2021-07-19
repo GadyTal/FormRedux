@@ -7,7 +7,7 @@ import { PagerPresenationComponentProps } from '../../../../Types/types';
 import { CertificatePager } from '../../../CertificateForm/CertificateFormPager';
 import UiStateConnector from '../../../Common/UiStateConnector';
 
-export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({ errors, state, setFormState, openFn, changePage }) => {
+export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({ errors, state, setFormState, openFn, changePage, onUiStateChange }) => {
   return (
     <>
       <div>RuleFormPresentaions</div>
@@ -34,8 +34,8 @@ export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({
       />
       <div>{errors.sshProfile}</div>
 
-      <UiStateConnector elementId={"rule-accordion"} rednerProps={(onUIStateChange) => {
-        return <Accordion onChange={(e) => onUIStateChange("Harta")}>
+      <UiStateConnector elementId={"destination-accordion"} rednerProps={(onUIStateChange, uiState) => {
+        return <Accordion onChange={(e) => onUIStateChange(1)} expanded={uiState}>
           <AccordionSummary
             aria-controls="panel1a-content"
             id="panel1a-header"

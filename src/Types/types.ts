@@ -1,10 +1,12 @@
+
 export interface PagerPresenationComponentProps {
   openFn: OpenComponentFn; 
   changePage: (id: string) => void;
   onSubmit: (state: any) => void;
   state: Record<string, any>
   setFormState: (state: Record<string, any>) => void
-  errors: Record<string, boolean>
+  errors: Record<string, boolean>,
+  onUiStateChange: (state: Record<string, any>) => void;
 }
 
 export interface CurrentOpen {
