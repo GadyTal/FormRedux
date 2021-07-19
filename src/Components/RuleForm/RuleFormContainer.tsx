@@ -1,10 +1,10 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { deleteEntity, editFormEntity, RuleEntity, saveEntity, updateEntity } from "../../Store/ruleStore";
+import { deleteEntity, editFormEntity, RuleEntity, saveEntity, setActivePageId, updateEntity } from "../../Store/ruleStore";
 import { RootState } from "../../Store/store";
 
 interface RuleFormConainerProps extends PropsFromRedux {
-  renderProp: (initState: Record<string, any>, onSubmit: (data: any) => Promise<string>, localEditEntity: (data?: RuleEntity) => void
+  renderProp: (initState: Record<string, any>, onSubmit: (data: any) => Promise<string>, localEditEntity: (data?: RuleEntity) => void, setActivePageId: (activePageIndex: string) => void
   ) => JSX.Element;
 }
 
@@ -28,13 +28,13 @@ export const RuleFormContainer: React.FC<RuleFormConainerProps> = (props) => {
     editFormEntity(data);
   }
 
-  return renderProp(currentEditEntity, onSubmit, localEditEntity)
+  return renderProp(currentEditEntity, onSubmit, localEditEntity, setActivePageId)
 };
 
 const connector = connect((state: RootState) => ({
   currentEditEntity: state.Rule.form.current
 }), {
-  deleteEntity, editFormEntity, saveEntity, updateEntity
+  deleteEntity, editFormEntity, saveEntity, updateEntity, setActivePageId
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>

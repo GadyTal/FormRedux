@@ -1,6 +1,11 @@
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { PagerPresenationComponentProps } from '../../../../Types/types';
 import { CertificatePager } from '../../../CertificateForm/CertificateFormPager';
+import UiStateConnector from '../../../Common/UiStateConnector';
 
 export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({ errors, state, setFormState, openFn, changePage }) => {
   return (
@@ -28,11 +33,30 @@ export const RuleFormPresentation: React.FC<PagerPresenationComponentProps> = ({
         onChange={setFormState}
       />
       <div>{errors.sshProfile}</div>
+
+      <UiStateConnector elementId={"rule-accordion"} rednerProps={(onUIStateChange) => {
+        return <Accordion onChange={(e) => onUIStateChange("Harta")}>
+          <AccordionSummary
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Accordion 1</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+              sit amet blandit leo lobortis eget.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      }} />
+
+
       <button
         onClick={() => {
           openFn({
             layout: 'rightPanel',
-            component: CertificatePager 
+            component: CertificatePager
           });
         }}
       >

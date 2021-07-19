@@ -47,8 +47,8 @@ const ruleFormMachine = createMachine({
   }
 });
 
-export const RuleFormPager: React.FC<{ openFn: OpenComponentFn, close: () => void }> = ({ openFn, close }) => {
-  const { changePage, currentPage } = usePager(ruleFormMachine, {
+export const RuleFormPager: React.FC<{ openFn: OpenComponentFn, close: () => void, setActivePageId: (activePageId: string) => void }> = ({ openFn, close, setActivePageId }) => {
+  const { changePage, currentPage, activePageId } = usePager(ruleFormMachine, {
     actions: {
       closeModal: () => {
         close();
@@ -59,22 +59,24 @@ export const RuleFormPager: React.FC<{ openFn: OpenComponentFn, close: () => voi
         return Promise.resolve("success");
       }
     }
-  });
+  }, setActivePageId);
 
   if (!(currentPage.context as any)?.schemaValidation) return <>{"Boozi"}</>
 
   return (
-    <RuleFormContainer renderProp={(initState, onSubmit, editEntity) => {
+    <RuleFormContainer renderProp={(initState, onSubmit, editEntity, setActivePageId) => {
       return <FormContainer schema={(currentPage.context as any).schemaValidation} initialState={initState} onSubmit={(data) => {
         changePage("SUBMIT");
       }} formName={"Rule Form Container"} renderProps={(validation, formState, errors, setFormState) => {
         const CurrentComponent = (currentPage.context as any).Component;
 
         return (
-          <CurrentComponent changePage={changePage} openFn={(current: CurrentOpen) => {
-            openFn(current);
-            editEntity(formState)
-          }} errors={errors} state={formState} setFormState={setFormState} />
+          <CurrentComponent onUiStateChange={(state) => handleUiStateChange({ ...currentUIState, ...state })}
+            changePage={changePage} openFn={(current: CurrentOpen) => {
+              openFn(current);
+              handleUiStateChange({ activePageId: currentPage.context.id })
+              editEntity(formState)
+            }} errors={errors} state={formState} setFormState={setFormState} />
         )
       }} />
     }} />

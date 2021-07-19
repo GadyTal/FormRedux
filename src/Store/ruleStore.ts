@@ -10,7 +10,9 @@ const ruleInitialState: EntitySliceState<RuleEntity> = {
     {id: '3', name: 'rulePredfined3'}
   ],
   form: {
-    current: undefined
+    current: undefined,
+    uiState: {},
+    activePageId: ''
   }
 };
 
@@ -46,6 +48,9 @@ export const ruleSlice = createSlice({
     editFormEntity: (state, action: PayloadAction<RuleEntity>) => {
       state.form.current = action.payload
     },
+    setActivePageId: (state, action: PayloadAction<string>) => {
+      state.form.activePageId = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(certificateSlice.actions.saveEntity, (state, action) => {
@@ -56,4 +61,4 @@ export const ruleSlice = createSlice({
   }
 });
 
-export const { saveEntity, deleteEntity, updateEntity, editFormEntity } = ruleSlice.actions;
+export const { saveEntity, deleteEntity, updateEntity, editFormEntity, setActivePageId } = ruleSlice.actions;

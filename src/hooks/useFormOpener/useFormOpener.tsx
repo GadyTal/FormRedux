@@ -4,7 +4,7 @@ import { RootState } from '../../Store/store';
 import { CurrentOpen, EntityType } from '../../Types/types';
 
 export const useFormOpener = (entityTypes: EntityType[]) => {
-  const { openFn } = useLayoutOpener();
+  const { openFn, close } = useLayoutOpener();
   const storeSlice = useSelector<RootState, any>((storeState) => {
     const states: {[key: string]: any} = {};
 
@@ -64,6 +64,7 @@ export const useFormOpener = (entityTypes: EntityType[]) => {
   }
 
   return {
+    close,
     openEdit,
     openCreate,
     isLoading

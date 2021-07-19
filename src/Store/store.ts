@@ -15,6 +15,8 @@ export interface EntitySliceState<Model> {
   entities: Model[];
   form: {
     current?: Model
+    uiState?: any,
+    activePageId?: string
   }
 }
 
