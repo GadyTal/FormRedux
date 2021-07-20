@@ -24,8 +24,12 @@ export const RuleFormPager: React.FC<{ openFn: OpenComponentFn, close: () => voi
     <PagerComponent entityStateMachine={ruleFormMachine} entityStateMachineOptions={entityStateMachineOptions} renderProps={(changePage, currentPage, activePageId) => {
       return (<UiStateContextProvider id={activePageId} renderProp={(setUiState) => {
         return <RuleFormContainer renderProp={(initState, onSubmit, editEntity) => {
+          if (!(currentPage.context as any)?.schemaValidation) {
+            debugger;
+          }
           return <FormContainer schema={(currentPage.context as any).schemaValidation} initialState={initState} onSubmit={(data) => {
             changePage("SUBMIT");
+            debugger;
           }} formName={"Rule Form Container"} renderProps={(validation, formState, errors, setFormState) => {
             const CurrentComponent = (currentPage.context as any).Component;
 
@@ -35,12 +39,12 @@ export const RuleFormPager: React.FC<{ openFn: OpenComponentFn, close: () => voi
               setFormState={setFormState}
               changePage={(dest: string) => {
                 changePage(dest);
-                setUiState()
+                setUiState();
               }}
               openFn={(current: CurrentOpen) => {
                 openFn(current);
                 editEntity(formState);
-                setUiState()
+                setUiState();
               }} />
           }} />
         }} />

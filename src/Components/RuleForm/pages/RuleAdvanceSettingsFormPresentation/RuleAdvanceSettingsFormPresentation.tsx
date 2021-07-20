@@ -19,7 +19,7 @@ const RuleAdvanceSettingsFormPresentation: React.FC<PagerPresenationComponentPro
       />
       <div>{errors.other}</div>
 
-      <button onClick={() => changePage('init')}>Back</button>
+      <button type={'button'} onClick={() => changePage('init')}>Back</button>
 
       <input type={'submit'} value={'Submit'} />
     </>

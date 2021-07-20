@@ -24,7 +24,8 @@ export const ruleFormMachine = createMachine({
         schemaValidation: ruleAdvanceSettingsFormPresentationValidationSchema as any
       },
       on: {
-        SUBMIT: 'init'
+        SUBMIT: 'init',
+        init: 'init'
       }
     },
     onSubmit: {
@@ -33,6 +34,9 @@ export const ruleFormMachine = createMachine({
         onDone: {
           target: "Submitted"
         }
+      },
+      on: {
+        Submitted: 'Submitted'
       }
     },
     Submitted: {

@@ -32,7 +32,7 @@ const UiStateContextProvider: React.FC<{ id: string, renderProp: (setUiState: ()
       return;
     } 
 
-    // Data flow bug
+    // If got here - Data flow bug
     console.error("Bug in UiStateContextProvider");
   }
 

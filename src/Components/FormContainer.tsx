@@ -12,7 +12,7 @@ export const FormContainer: React.FC<{
     initialValues: initialState,
     validationSchema: schema,
     onSubmit: values => {
-      onSubmit(formik.values);
+      onSubmit(values);
     },
   });
 
