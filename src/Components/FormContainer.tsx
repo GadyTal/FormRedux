@@ -21,4 +21,20 @@ export const FormContainer: React.FC<{
       {renderProps(formik.validateField, formik.values, formik.errors, formik.handleChange)}
     </form>
   );
+
+  // const formik = useForm({
+  //   defaultValues: initialState,
+  //   resolver: yupResolver(schema),
+  // });
+
+  // const { errors  } = formik.formState;
+
+  // return (
+  //   <form onSubmit={formik.handleSubmit(onSubmit)} >
+  //     <>
+  //     {renderProps(formik.trigger, formik.getValues(), errors, (e: any) => { formik.setValue(e.target.name, e.target.value)})}
+  //     <DevTool control={formik.control} placement={"top-right"} />
+  //     </>
+  //   </form>
+  // );
 };
