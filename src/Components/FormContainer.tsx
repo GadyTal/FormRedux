@@ -1,9 +1,13 @@
 import { useFormik } from 'formik';
 import React from 'react';
+// import { useForm } from "react-hook-form"
+// import { yupResolver } from "@hookform/resolvers/yup";
 
 export const FormContainer: React.FC<{
-  schema: object, onSubmit: (state: any) => void, formName: string,
+  schema: any, 
+  formName: string,
   initialState: Record<string, any>
+  onSubmit: (state: any) => void, 
   renderProps: (validation: any, formState: any, errors: any, setFormState: any) => JSX.Element
 }> = props => {
   const { renderProps, schema, onSubmit, formName, initialState } = props;
@@ -32,8 +36,8 @@ export const FormContainer: React.FC<{
   // return (
   //   <form onSubmit={formik.handleSubmit(onSubmit)} >
   //     <>
-  //     {renderProps(formik.trigger, formik.getValues(), errors, (e: any) => { formik.setValue(e.target.name, e.target.value)})}
-  //     <DevTool control={formik.control} placement={"top-right"} />
+  //     {renderProps(formik.trigger, formik.getValues(), errors, (e: any) => { debugger; formik.setValue(e.target.name, e.target.value)})}
+  //     {/* <DevTool control={formik.control} placement={"top-right"} /> */}
   //     </>
   //   </form>
   // );

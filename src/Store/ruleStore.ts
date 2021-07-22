@@ -1,5 +1,5 @@
+import { EntityType } from './../Types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EntityType } from '../Types/types';
 import { CertEntity, certificateSlice } from './certificateStore';
 import { EntitySliceState } from "./store";
 
@@ -12,7 +12,7 @@ const ruleInitialState: EntitySliceState<RuleEntity> = {
   form: {
     current: undefined,
     uiState: {},
-    activePageId: ''
+    activePageId: 'init'
   }
 };
 

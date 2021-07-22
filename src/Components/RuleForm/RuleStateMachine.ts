@@ -1,10 +1,9 @@
-import { createMachine } from 'xstate';
 import RuleAdvanceSettingsFormPresentation from './pages/RuleAdvanceSettingsFormPresentation/RuleAdvanceSettingsFormPresentation';
 import { ruleAdvanceSettingsFormPresentationValidationSchema } from './pages/RuleAdvanceSettingsFormPresentation/validationSchema';
 import { RuleFormPresentation } from './pages/RuleFormPresentation/RuleFormPresentation';
 import { ruleFormPresentationValidationSchema } from './pages/RuleFormPresentation/validationSchema';
 
-export const ruleFormMachine = createMachine({
+export const ruleFormMachine = {
   id: 'ruleForm',
   initial: 'init',
   states: {
@@ -40,4 +39,4 @@ export const ruleFormMachine = createMachine({
       type: 'final'
     }
   }
-});
+}

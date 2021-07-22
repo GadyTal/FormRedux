@@ -10,8 +10,6 @@ export const UiStateCtx = React.createContext<UiStateContextProps>({ uiState: {}
 const UiStateContextProvider: React.FC<{ id: string, renderProp: (setUiState: () => void) => JSX.Element } & PropsFromRedux> = (props) => {
   const { renderProp, id, setActivePageId, setUiState, uiState } = props;
 
-  console.log("uiState", uiState);
-
   useEffect(() => {
     if (!uiState[id]) {
       uiStateRef.current = null;
@@ -27,11 +25,11 @@ const UiStateContextProvider: React.FC<{ id: string, renderProp: (setUiState: ()
   const setUiStateRedux = () => {
     if (uiStateRef.current) {
       setUiState({ [id]: uiStateRef.current });
-      setActivePageId(id);
       
       return;
     } 
-
+    
+    setActivePageId(id);
     // Data flow bug
     console.error("Bug in UiStateContextProvider");
   }
