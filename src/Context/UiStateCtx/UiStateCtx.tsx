@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { setActivePageId, setUiState } from '../../Store/ruleStore';
-import { RootState } from '../../Store/store';
 
 interface UiStateContextProps { uiState: Record<string, Record<string, any>>, setLocalUiState: (state: Record<string, any>) => void; };
 
 export const UiStateCtx = React.createContext<UiStateContextProps>({ uiState: {}, setLocalUiState: () => null });
 
-const UiStateContextProvider: React.FC<{ id: string, renderProp: (setUiState: () => void) => JSX.Element } & PropsFromRedux> = (props) => {
-  const { renderProp, id, setActivePageId, setUiState, uiState } = props;
+export const UiStateContextProvider: React.FC<{ id: string, renderProp: (setUiState: () => void) => JSX.Element, onUiStateSave: (uiState: Record<string, Record<string, any>>) => void, uiState: Record<string, Record<string,any>> }> = (props) => {
+  const { renderProp, id, onUiStateSave, uiState } = props;
+  // const uiState = getUiState();
 
   useEffect(() => {
     if (!uiState[id]) {
@@ -24,14 +22,8 @@ const UiStateContextProvider: React.FC<{ id: string, renderProp: (setUiState: ()
 
   const setUiStateRedux = () => {
     if (uiStateRef.current) {
-      setUiState({ [id]: uiStateRef.current });
-      
-      return;
+      onUiStateSave({ [id]: uiStateRef.current });
     } 
-    
-    setActivePageId(id);
-    // Data flow bug
-    console.error("Bug in UiStateContextProvider");
   }
 
   return (
@@ -47,8 +39,5 @@ export const useUiState = () => {
   return uiState
 };
 
-const connector = connect((state: RootState) => { return { uiState: state.Rule.form.uiState } }, { setActivePageId, setUiState });
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export default connector(UiStateContextProvider);
+export default UiStateContextProvider;
